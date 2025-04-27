@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Clock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Important for mobile view -->
+    <style>
+        body {
+            background: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .clock {
+            color: #38bdf8;
+            font-size: 80px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px #38bdf8, 0 0 40px #38bdf8;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px #38bdf8; }
+            50% { text-shadow: 0 0 20px #38bdf8, 0 0 30px #38bdf8; }
+            100% { text-shadow: 0 0 10px #38bdf8; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="clock" id="clock">--:--:--</div>
+
+<script>
+    const clock = document.getElementById('clock');
+    const socket = new WebSocket('ws://' + window.location.host + '/ws/clock/');
+
+    socket.onmessage = function(e) {
+        clock.innerText = e.data;
+    }
+</script>
+
+</body>
+</html>
